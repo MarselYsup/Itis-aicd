@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <cstdio>
 using namespace std;
 
 struct elem {
@@ -7,60 +7,60 @@ struct elem {
     elem* next;
 };
 
-elem* add(elem* head,int x) { //добавление элемента в лист
+elem* add_last(elem* head, int x) {
     elem* p = new elem;
+    (*p).next = NULL;
     (*p).val = x;
-    p->next = head;
-    return p;
-}
-
-elem* empty_list() { //пустой лист
-return NULL;
-}
-
-elem* reverse_list(elem* head) { //переворачивает лист 
-    elem* p = head;
-    elem* newList = empty_list();
-    while(p) {
-        newList = add(newList,(*p).val);
-        p = (*p).next;
+    if(head==NULL) {
+       return p;
     }
-    return newList;
+    else {
+        elem* q = head;
+        while((*q).next) {
+            q = (*q).next;
+        }
+        (*q).next = p;
+    }
+    return head;
+}
+elem* empty_list() {
+	return NULL;
 }
 
-void print_list (elem* head) { //вывод листа
+void print_list (elem* head) {
     elem* p = head;
     while(p !=NULL) {
-        cout<<(*p).val<<" ";
+        printf("%d ",(*p).val);
         p = (*p).next;
     }
-    cout<<endl;
+
 
 }
+
+
 int main()
 {
     int n;
     cin>>n;
     elem* primeNumbers = empty_list();
-    primeNumbers = add(primeNumbers,2); //так как 1<=n
-    int count_primeNumbers = 1; //счетчик кол-во простых чисел
-    int next_Number = 3; // следующее введенное число
+    primeNumbers = add_last(primeNumbers,2);
+    int count_primeNumbers = 1;
+    int next_Number = 3;
     while(n>count_primeNumbers) {
         bool isPrime = true;
         elem* p = primeNumbers;
-        while(p&&isPrime) {
+        while(isPrime&&(*p).val*(*p).val<=next_Number&&p) {
             if(next_Number%(*p).val==0) {
                 isPrime = false;
             }
             p = (*p).next;
         }
         if(isPrime) {
-            primeNumbers = add(primeNumbers,next_Number);
+            primeNumbers = add_last(primeNumbers,next_Number);
             count_primeNumbers++;
         }
         next_Number+=2;
     }
-    primeNumbers = reverse_list(primeNumbers); //переворачиваем лист в правильном порядке
     print_list(primeNumbers);
     return 0;
 }
