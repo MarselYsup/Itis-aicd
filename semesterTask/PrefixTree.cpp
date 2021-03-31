@@ -8,8 +8,7 @@ struct PrefixTree {
     PrefixTree *next[alphabet] = {0};
     bool is_terminal = false;
 };
-PrefixTree *root = new PrefixTree();
-void add(string  s) {
+void add(string  s,PrefixTree* root) {
     PrefixTree *head = root;
     for(int i = 0;i<s.length();i++) {
         char c = s[i];
@@ -21,7 +20,7 @@ void add(string  s) {
     }
     head->is_terminal = true;
 }
-bool contains(string  s) {
+bool contains(string  s,PrefixTree* root) {
     PrefixTree *head = root;
     bool flag = true;
     for(int i = 0;i<s.length();i++) {
@@ -36,7 +35,7 @@ bool contains(string  s) {
     flag &= head->is_terminal;
     return flag;
 }
-void remove(string  s) {
+void remove(string  s,PrefixTree* root) {
     PrefixTree *head = root;
     for(int i=0;i<s.length();i++) {
         char c = s[i];
@@ -52,19 +51,19 @@ int main()
 {   //Задание:найти лексикографически самое маленькое слово
     int n;
     cin>>n;
+    PrefixTree *root = new PrefixTree();
     for(int i = 0;i<n;i++) {
         string s;
         cin>>s;
-        add(s);
+        add(s,root);
     }
-    PrefixTree *head = root;
     string lexic_smallest_word = "";
-    while(!head->is_terminal) {
+    while(!root->is_terminal) {
         bool isNewNode = false;
         for(int i=0;i<alphabet&&!isNewNode;i++) {
-            if (head->next[i]!=nullptr){
+            if (root->next[i]!=nullptr){
                 lexic_smallest_word +=(char)(i+'a');
-                head = head->next[i];
+                root = root->next[i];
                 isNewNode = true;
             }
         }
