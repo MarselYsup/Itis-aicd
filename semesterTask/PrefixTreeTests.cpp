@@ -57,6 +57,8 @@ cin>>size;//вводим колчество вводимых элементов
 int length;
 cin>>length;//вводим длинну вводимых слов
 for(int i=0;i<50;i++) { // проверяет 50 наборов
+int test_number = 0;
+srand(test_number+1);
 string s [size];
 PrefixTree *root = new PrefixTree();
 for(int j = 0;j<size;j++) { //создаем наборы данных
@@ -96,7 +98,7 @@ unsigned int start_time =  clock();//считаем время через фун
     unsigned int end_time3 = clock();
     unsigned int search_time3 = end_time3 - start_time3;
     cout<<"Removing time:"<<search_time3<<endl;
-
+	test_number++;
 }
 
 
